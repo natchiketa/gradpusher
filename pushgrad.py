@@ -70,7 +70,7 @@ def pushgrad(
     # set the clipboard text data
     clipboard.set_text(pushgrad_call)
 
-    pdb.gimp_progress_set_text(pushgrad_call)
+    #pdb.gimp_progress_set_text(pushgrad_call)
 
     return
 
