@@ -1,0 +1,38 @@
+@import "pushgrad";
+
+@mixin icon_home($scale) {
+  $s: $scale;
+  $gv: ();
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 100%), (7px 15px), (6px 12px), $s));
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 100%), (12px 15px), (6px 5px), $s));
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 100%), (17px 15px), (6px 12px), $s));
+  $gv: pushgrad(radg(ellipse, farthest-side, center bottom, (transparent 100%, black 101%), (13px 20px), (4px 3px), $s));
+
+  // bottom w/rounded corners
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 101%), (18px 27px), (4px 1px), $s));
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 101%), (8px 27px), (4px 1px), $s));
+  $gv: pushgrad(radg(ellipse, farthest-side, right top, (black 100%, transparent 101%), (7px 27px), (1px 1px), $s));
+  $gv: pushgrad(radg(ellipse, farthest-side, left top, (black 100%, transparent 101%), (12px 27px), (1px 1px), $s));
+  $gv: pushgrad(radg(ellipse, farthest-side, right top, (black 100%, transparent 101%), (17px 27px), (1px 1px), $s));
+  $gv: pushgrad(radg(ellipse, farthest-side, left top, (black 100%, transparent 101%), (22px 27px), (1px 1px), $s));
+  // roof
+  $gv: pushgrad(ling(-45deg, (black 50%, transparent 50%), (3px 6px), (10px 12px), $s));
+  $gv: pushgrad(ling(45deg, (black 50%, transparent 51%), (17px 6px), (10px 12px), $s));
+  $gv: pushgrad(radg(ellipse, closest-side, center center, (black 100%, transparent 101%), (3px 16px), (4px 4px), $s));
+  $gv: pushgrad(radg(ellipse, closest-side, center center, (black 100%, transparent 101%), (23px 16px), (4px 4px), $s));
+  //below roof ridge
+  $gv: pushgrad(ling(90deg, (black 100%, transparent 101%), (13px 7px), (4px 13px), $s));
+  //roof ridge
+  $gv: pushgrad(radg(ellipse, farthest-side, center bottom, (black 100%, transparent 101%), (13px 6px), (4px 1px), $s));
+
+
+  @include build_gradients($gv);
+
+}
+
+.icon_home.large {
+  $scale: 10;
+  width: 30px * $scale;
+  height: 30px * $scale;
+  @include icon_home($scale);
+}

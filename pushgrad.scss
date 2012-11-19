@@ -1,0 +1,87 @@
+/*
+pushgrad: gradient layer functions and mixins
+*/
+
+$webkit: ();
+$moz: ();
+$ms: ();
+$o: ();
+$w3c: ();
+$pos: ();
+$size: ();
+$vendors: ($webkit, $moz, $ms, $o, $w3c, $pos, $size);
+
+@function radg($shape, $size, $position, $colorStops, $gpos, $gsize, $scale) {
+
+  $ps: (); @each $p in $gpos { $ps: append(($ps), $p * $scale, space); }
+  $sz: (); @each $s in $gsize { $sz: append(($sz), $s * $scale); }
+
+  @return (-webkit-radial-gradient($position, $size, $colorStops)),
+    (-moz-radial-gradient($position, $size, $colorStops)),
+    (-ms-radial-gradient($position, $size, $colorStops)),
+    (-o-radial-gradient($position, $size, $colorStops)),
+    (radial-gradient($size $shape at $position, $colorStops)),
+    ($ps),
+    ($sz);
+}
+
+@function ling($deg, $colorStops, $position, $size, $scale) {
+
+// w3c spec using a different orientation for degrees
+  $w3cDeg: $deg; $deg: 90 + ($deg * -1);
+// scale the background-position and background-size values
+  $ps: (); @each $v in $position { $ps: append(($ps), $v * $scale); }
+  $sz: (); @each $v in $size { $sz: append(($sz), $v * $scale); }
+
+  @return (-webkit-linear-gradient($deg, $colorStops)),
+    (-moz-linear-gradient($deg, $colorStops)),
+    (-ms-linear-gradient($deg, $colorStops)),
+    (-o-linear-gradient($deg, $colorStops)),
+    (linear-gradient($w3cDeg, $colorStops)),
+    ($ps),
+    ($sz);
+}
+
+@function pushgrad($newGrads) {
+/*
+  @param $newGrads: a list matching the output of the radgrad() or lingrad() functions
+  @result: the result of all of the appended lists in one list containing them all
+
+  NOTE: the returning of the lists is just serving the syntax. Actually, all of the
+  variables in this function are global to this SCSS file,
+**/
+  @each $grad in $newGrads {
+    @if nth($newGrads, 1) == $grad {
+      $webkit: append(($webkit), $grad, comma);
+    } @else if nth($newGrads, 2) == $grad {
+      $moz: append(($moz), $grad, comma);
+    } @else if nth($newGrads, 3) == $grad {
+      $ms: append(($ms), $grad, comma);
+    } @else if nth($newGrads, 4) == $grad {
+      $o: append(($o), $grad, comma);
+    } @else if nth($newGrads, 5) == $grad {
+      $w3c: append(($w3c), $grad, comma);
+    } @else if nth($newGrads, 6) == $grad {
+      $pos: append(($pos), $grad, comma);
+    } @else if nth($newGrads, 7) == $grad {
+      $size: append(($size), $grad, comma);
+    }
+  }
+  @return ($webkit, $moz, $ms, $o, $w3c, $pos, $size);
+}
+
+@mixin build_gradients($gradientList, $repeat: no-repeat) {
+  background: nth($gradientList, 1);
+// webkit
+  background: nth($gradientList, 2);
+// moz
+  background: nth($gradientList, 3);
+// ms
+  background: nth($gradientList, 4);
+// o
+  background: nth($gradientList, 5);
+// w3c
+  background-position: nth($gradientList, 6);
+  background-size: nth($gradientList, 7);
+  background-repeat: no-repeat;
+}
